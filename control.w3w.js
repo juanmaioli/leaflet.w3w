@@ -22,7 +22,7 @@ L.Control.w3w = L.Control.extend({
 		L.DomUtil.addClass(container, 'hidden');
 		L.DomEvent.disableClickPropagation(container);
 		this._addText(container, map);
-		
+
 		L.DomEvent.addListener(container, 'click', function() {
 			window.prompt("Copy to clipboard: Ctrl+C, Enter", L.DomUtil.get(this._locationText).dataset.words);
     	}, this);
@@ -35,7 +35,7 @@ L.Control.w3w = L.Control.extend({
 		L.DomUtil.get(this._locationText).innerHTML = '<strong>w3w:</strong> ' + this.options.locationText;
 		return container;
 	},
-	
+
 	_getWords: function(obj,locText){
 			var getJSON = function(url, successHandler, errorHandler) {
 			 var xhr = typeof XMLHttpRequest != 'undefined' ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -55,12 +55,12 @@ L.Control.w3w = L.Control.extend({
 			  };
 			  xhr.send();
 			};
-			
-			getJSON('https://api.what3words.com/v2/reverse?key='+this.options.apikey+'&coords='+obj.lat+','+obj.lng, function(data) {
+
+				getJSON('https://api.what3words.com/v3/convert-to-3wa?coordinates='+obj.lat+','+obj.lng + '&key=' + this.options.apikey + '&language=en', function(data) {
 				console.log(data);
 			  locText.innerHTML = '<strong>w3w:</strong> ' + data.words;
 			  locText.dataset.words =("data-",  data.words);
-			  
+
 			}, function(status) {
 			  console.log('Something went wrong.');
 			});
